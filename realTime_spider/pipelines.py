@@ -43,7 +43,7 @@ class RealtimeSpiderPipeline(object):
             # 这里写爬虫 realTime_spider 的逻辑
             db_name = 'realTime_matchs'
             self.db = self.client[db_name]  # 获得数据库的句柄
-            col_name = 'matches_' + item['current_search_date']
+            col_name = 'matchs_' + item['current_search_date']
             # 如果match_name（集合名称） 在 该数据中，则使用update更新，否则insert
             self.coll = self.db[col_name]  # 获得collection的句柄
             match_id = item['match_id']
