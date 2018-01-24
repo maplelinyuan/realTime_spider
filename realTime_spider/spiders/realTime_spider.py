@@ -385,6 +385,9 @@ class OddSpider(RedisSpider):
                     original_away_odd = prev_away_odd
                     # 如果当前更新时间距离开场小于限定初盘时间，并且时间差满足最低条件，则记录初赔
                     break
+                else:
+                    print('更新时间不满足条件2，跳过！')
+                    return False
             prev_home_odd = home_odd
             prev_draw_odd = draw_odd
             prev_away_odd = away_odd
