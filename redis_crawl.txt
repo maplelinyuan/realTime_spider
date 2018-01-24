@@ -1,0 +1,2 @@
+LPUSH OddSpider:start_urls http://bf.7m.com.cn/
+
