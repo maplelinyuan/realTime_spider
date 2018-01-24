@@ -40,18 +40,19 @@ class RealtimeSpiderPipeline(object):
 
     def process_item(self, item, spider):
         if spider.name == 'realTime_spider':
-        # 这里写爬虫 realTime_spider 的逻辑
-            db_name = 'realTime_' + item['current_search_date']
+            # 这里写爬虫 realTime_spider 的逻辑
+            db_name = 'realTime_matchs'
             self.db = self.client[db_name]  # 获得数据库的句柄
-            match_name = 'match_' + item['match_id']
+            col_name = 'matches_' + item['current_search_date']
             # 如果match_name（集合名称） 在 该数据中，则使用update更新，否则insert
-            if match_name in self.db.collection_names():
+            self.coll = self.db[col_name]  # 获得collection的句柄
+            match_id = item['match_id']
+            if self.coll.find({"match_id": match_id}).count() > 0:
                 col_exist = True
             else:
                 col_exist = False
-            self.coll = self.db[match_name]  # 获得collection的句柄
             try:
-                match_company_id = item['match_id'] + '_' + item['company_id']  # 比赛id_公司id
+                company_id = item['company_id']  # 比赛id_公司id
                 try:
                     league_name = item['league_name']
                     home_name = item['home_name']
@@ -61,24 +62,21 @@ class RealtimeSpiderPipeline(object):
 
                     # 如果col_exist，则update，否则insert
                     if col_exist:
-                        updateItem = dict(match_company_id_list=match_company_id)
-                        self.coll.update({}, {'$addToSet': updateItem})
+                        updateItem = dict(company_id_list=company_id)
+                        self.coll.update({"match_id": match_id}, {'$addToSet': updateItem})
                     else:
-                        insertItem = dict(league_name=league_name, home_name=home_name, away_name=away_name,
-                                        start_time=start_time, support_direction=support_direction,
-                                        match_company_id_list=[match_company_id])
+                        insertItem = dict(match_id=match_id, league_name=league_name, home_name=home_name, away_name=away_name,
+                                          start_time=start_time, support_direction=support_direction,
+                                          company_id_list=[company_id])
                         self.coll.insert(insertItem)
                 except Exception as err:
                     print(err)
                     pass
 
-                # match_name_2 = match_company_id
-                # if match_name_2 in self.db.getCollectionNames():
-                #     col_2_exist = True
-                # else:
-                #     col_2_exist = False
-                self.coll_2 = self.db[match_company_id]  # 获得比赛ID_公司ID collection的句柄
+                col_2_name = "match_" + match_id
+                self.coll_2 = self.db[col_2_name]  # 获得collection 2的句柄
                 try:
+                    company_id = item['company_id']
                     company_name = item['company_name']
                     original_home_odd = item['original_home_odd']
                     original_draw__odd = item['original_draw__odd']
@@ -88,7 +86,7 @@ class RealtimeSpiderPipeline(object):
                     last_away_odd = item['last_away_odd']
 
                     # 不管col_2_exist，都insert
-                    insertItem = dict(company_name=company_name, home_odd=original_home_odd, draw_odd=original_draw__odd, away_odd=original_away_odd,
+                    insertItem = dict(company_id=company_id, company_name=company_name, home_odd=original_home_odd, draw_odd=original_draw__odd, away_odd=original_away_odd,
                                       last_home_odd=last_home_odd, last_draw_odd=last_draw_odd, last_away_odd=last_away_odd)
                     self.coll_2.insert(insertItem)
                 except Exception as err:

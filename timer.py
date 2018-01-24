@@ -11,7 +11,7 @@ schedule = sched.scheduler(time.time, time.sleep)
 def perform_command(cmd, inc):
     # 安排inc秒后再次运行自己，即周期运行
     schedule.enter(inc, 0, perform_command, (cmd, inc))
-    print('开始执行：', cmd)
+    print('开始执行：%s, 时间：%s' % (cmd, time.strftime('%Y-%m-%d %H:%M', time.localtime(time.time()))))
     os.system(cmd)
 
 

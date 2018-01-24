@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6078c43e-5b36-4611-910e-cd0cede17eef" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/realTime_spider/spiders/realTime_spider.py" afterPath="$PROJECT_DIR$/realTime_spider/spiders/realTime_spider.py" />
+      <change beforePath="$PROJECT_DIR$/realTime_spider/pipelines.py" afterPath="$PROJECT_DIR$/realTime_spider/pipelines.py" />
+      <change beforePath="$PROJECT_DIR$/timer.py" afterPath="$PROJECT_DIR$/timer.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="realTime_spider.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="realTime_spider.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/realTime_spider/spiders/realTime_spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="365" column="16" lean-forward="true" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
+            <state relative-caret-position="-430">
+              <caret line="365" column="16" lean-forward="false" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
               <folding>
                 <element signature="e#36#49#0" expanded="true" />
               </folding>
@@ -71,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pipelines.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="pipelines.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/realTime_spider/pipelines.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="32" column="10" lean-forward="false" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
+            <state relative-caret-position="539">
+              <caret line="78" column="49" lean-forward="false" selection-start-line="78" selection-start-column="39" selection-end-line="78" selection-end-column="49" />
               <folding>
                 <element signature="e#550#581#0" expanded="true" />
               </folding>
@@ -86,8 +86,8 @@
       <file leaf-file-name="timer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/timer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="24" column="51" lean-forward="false" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="51" />
+            <state relative-caret-position="228">
+              <caret line="13" column="97" lean-forward="false" selection-start-line="13" selection-start-column="97" selection-end-line="13" selection-end-column="97" />
               <folding />
             </state>
           </provider>
@@ -117,7 +117,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>client</find>
       <find>matchId_list</find>
       <find>suppo</find>
       <find>need_company_number</find>
@@ -146,11 +145,12 @@
       <find>completed_match_id_list</find>
       <find>pdb.s</find>
       <find>first_limit_mktime</find>
+      <find>match_company_id</find>
       <find>update_time</find>
     </findStrings>
     <replaceStrings>
-      <replace>realTime_crawled']</replace>
       <replace>realTime_</replace>
+      <replace>realTime_crawled']</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -162,9 +162,9 @@
         <option value="$PROJECT_DIR$/redis_crawl.txt" />
         <option value="$PROJECT_DIR$/realTime_spider/items.py" />
         <option value="$PROJECT_DIR$/realTime_spider/settings.py" />
+        <option value="$PROJECT_DIR$/realTime_spider/spiders/realTime_spider.py" />
         <option value="$PROJECT_DIR$/timer.py" />
         <option value="$PROJECT_DIR$/realTime_spider/pipelines.py" />
-        <option value="$PROJECT_DIR$/realTime_spider/spiders/realTime_spider.py" />
       </list>
     </option>
   </component>
@@ -174,11 +174,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="68" />
-    <option name="y" value="125" />
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="width" value="1366" />
-    <option name="height" value="828" />
+    <option name="height" value="728" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -249,7 +247,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -346,28 +345,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/timer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="24" column="51" lean-forward="false" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="51" />
+        <state relative-caret-position="228">
+          <caret line="13" column="97" lean-forward="false" selection-start-line="13" selection-start-column="97" selection-end-line="13" selection-end-column="97" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/realTime_spider/pipelines.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="32" column="10" lean-forward="false" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
-          <folding>
-            <element signature="e#550#581#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/realTime_spider/spiders/realTime_spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="365" column="16" lean-forward="true" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
+        <state relative-caret-position="-430">
+          <caret line="365" column="16" lean-forward="false" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
           <folding>
             <element signature="e#36#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/realTime_spider/pipelines.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="539">
+          <caret line="78" column="49" lean-forward="false" selection-start-line="78" selection-start-column="39" selection-end-line="78" selection-end-column="49" />
+          <folding>
+            <element signature="e#550#581#0" expanded="true" />
           </folding>
         </state>
       </provider>
