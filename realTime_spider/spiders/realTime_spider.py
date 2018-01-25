@@ -110,13 +110,13 @@ class OddSpider(RedisSpider):
         nowadays = datetime.datetime.now().strftime("%Y-%m-%d")  # 获取当前日期 格式2018-01-01
         yesterdy = (datetime.datetime.now() + datetime.timedelta(days=-1)).strftime("%Y-%m-%d")  # 获取昨天日期
         if current_hour < 12:
-            self.current_search_date = yesterdy  # str
+            current_search_date = yesterdy  # str
         else:
-            self.current_search_date = nowadays  # str
+            current_search_date = nowadays  # str
 
         # 链接数据库
         client = MongoClient(host='localhost', port=27017)
-        # db_name = 'realTime_' + self.current_search_date
+        # db_name = 'realTime_' + current_search_date
         # db = client[db_name]  # 获得数据库的句柄
         # coll_match_list = db.collection_names()
         self.completed_match_id_list = []  # 记录已经抓取了赔率信息的公司ID列表
@@ -134,14 +134,16 @@ class OddSpider(RedisSpider):
             if 12 < current_hour < 13 and 0 < current_minute < 30:
                 # 每天12点-12：30内清空crawled matchId list
                 info_coll.update({"crawled": 1}, {"$unset": {"matchId_list": 1}})
-            for item in [data['matchId_list'] for data in info_coll.find({"crawled": 1}, {"matchId_list": {"$exist": True}})][0]:
-                self.completed_match_id_list.append(str(item).strip())
+            if info_coll.find({"crawled": 1, "matchId_list": {"$exists": True}}).count() > 0:
+                for item in [data['matchId_list'] for data in info_coll.find({"crawled": 1, "matchId_list": {"$exists": True}})][0]:
+                    self.completed_match_id_list.append(str(item).strip())
         if info_coll.find({"no_need_company": 1}).count() > 0:
             if 12 < current_hour < 13 and 0 < current_minute < 30:
                 # 每天12点-12：30内清空crawled matchId list
                 info_coll.update({"no_need_company": 1}, {"$unset": {"matchId_list": 1}})
-            for item in [data['matchId_list'] for data in info_coll.find({"no_need_company": 1}, {"matchId_list": {"$exist": True}})][0]:
-                self.completed_match_id_list.append(str(item).strip())
+            if info_coll.find({"no_need_company": 1, "matchId_list": {"$exists": True}}).count() > 0:
+                for item in [data['matchId_list'] for data in info_coll.find({"no_need_company": 1, "matchId_list": {"$exists": True}})][0]:
+                    self.completed_match_id_list.append(str(item).strip())
         self.completed_match_id_list = list(set(self.completed_match_id_list))
         # 切换到记录当前正在爬取的match_id 文档， 清空之前的信息， 解锁分析这些比赛
         info_coll = db['realTime_crawling']
@@ -409,7 +411,7 @@ class OddSpider(RedisSpider):
         odd_Item['last_draw_odd'] = last_draw_odd  # float型
         odd_Item['last_away_odd'] = last_away_odd  # float型
         # odd_Item['update_time'] = time.strftime("%Y-%m-%d %H:%M", time.localtime(update_mktime))    # str
-        odd_Item['current_search_date'] = self.current_search_date  # str
+        # odd_Item['current_search_date'] = current_search_date  # str
         print('满足条件的赔率产生！')
         yield odd_Item
 

@@ -28,11 +28,20 @@
 
 
 from pymongo import MongoClient
-import datetime
+import datetime, time
 import json
 import pdb
 
 class RealtimeSpiderPipeline(object):
+    current_hour = time.localtime()[3]  # 获取当前的小时数，如果小于12则应该选择yesterday
+    current_minute = time.localtime()[4]  # 获取当前的小时数，如果小于12则应该选择yesterday
+    nowadays = datetime.datetime.now().strftime("%Y-%m-%d")  # 获取当前日期 格式2018-01-01
+    yesterdy = (datetime.datetime.now() + datetime.timedelta(days=-1)).strftime("%Y-%m-%d")  # 获取昨天日期
+    if current_hour < 12:
+        current_search_date = yesterdy  # str
+    else:
+        current_search_date = nowadays  # str
+
     def __init__(self):
         # 链接数据库
         self.client = MongoClient(host='localhost', port=27017)
@@ -43,7 +52,7 @@ class RealtimeSpiderPipeline(object):
             # 这里写爬虫 realTime_spider 的逻辑
             db_name = 'realTime_matchs'
             self.db = self.client[db_name]  # 获得数据库的句柄
-            col_name = 'matchs_' + item['current_search_date']
+            col_name = 'matchs_' + self.current_search_date
             # 如果match_name（集合名称） 在 该数据中，则使用update更新，否则insert
             self.coll = self.db[col_name]  # 获得collection的句柄
             match_id = item['match_id']
@@ -85,10 +94,11 @@ class RealtimeSpiderPipeline(object):
                     last_draw_odd = item['last_draw_odd']
                     last_away_odd = item['last_away_odd']
 
-                    # 不管col_2_exist，都insert
-                    insertItem = dict(company_id=company_id, company_name=company_name, home_odd=original_home_odd, draw_odd=original_draw__odd, away_odd=original_away_odd,
-                                      last_home_odd=last_home_odd, last_draw_odd=last_draw_odd, last_away_odd=last_away_odd)
-                    self.coll_2.insert(insertItem)
+                    # col_2
+                    if self.coll_2.find({'company_id': company_id}).count() == 0:
+                        insertItem = dict(company_id=company_id, company_name=company_name, home_odd=original_home_odd, draw_odd=original_draw__odd, away_odd=original_away_odd,
+                                          last_home_odd=last_home_odd, last_draw_odd=last_draw_odd, last_away_odd=last_away_odd)
+                        self.coll_2.insert(insertItem)
                 except Exception as err:
                     print(err)
                     pass
