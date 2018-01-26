@@ -33,15 +33,6 @@ import json
 import pdb
 
 class RealtimeSpiderPipeline(object):
-    current_hour = time.localtime()[3]  # 获取当前的小时数，如果小于12则应该选择yesterday
-    current_minute = time.localtime()[4]  # 获取当前的小时数，如果小于12则应该选择yesterday
-    nowadays = datetime.datetime.now().strftime("%Y-%m-%d")  # 获取当前日期 格式2018-01-01
-    yesterdy = (datetime.datetime.now() + datetime.timedelta(days=-1)).strftime("%Y-%m-%d")  # 获取昨天日期
-    if current_hour < 12:
-        current_search_date = yesterdy  # str
-    else:
-        current_search_date = nowadays  # str
-
     def __init__(self):
         # 链接数据库
         self.client = MongoClient(host='localhost', port=27017)
@@ -49,10 +40,18 @@ class RealtimeSpiderPipeline(object):
 
     def process_item(self, item, spider):
         if spider.name == 'realTime_spider':
+            current_hour = time.localtime()[3]  # 获取当前的小时数，如果小于12则应该选择yesterday
+            current_minute = time.localtime()[4]  # 获取当前的小时数，如果小于12则应该选择yesterday
+            nowadays = datetime.datetime.now().strftime("%Y-%m-%d")  # 获取当前日期 格式2018-01-01
+            yesterdy = (datetime.datetime.now() + datetime.timedelta(days=-1)).strftime("%Y-%m-%d")  # 获取昨天日期
+            if current_hour < 12:
+                current_search_date = yesterdy  # str
+            else:
+                current_search_date = nowadays  # str
             # 这里写爬虫 realTime_spider 的逻辑
             db_name = 'realTime_matchs'
             self.db = self.client[db_name]  # 获得数据库的句柄
-            col_name = 'matchs_' + self.current_search_date
+            col_name = 'matchs_' + current_search_date
             # 如果match_name（集合名称） 在 该数据中，则使用update更新，否则insert
             self.coll = self.db[col_name]  # 获得collection的句柄
             match_id = item['match_id']
